@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y \
     mysqli \
     gd \
     zip \
-    && a2dismod mpm_event \
-    && a2dismod mpm_worker \
-    && a2enmod mpm_prefork \
     && a2enmod rewrite
 
 # Set working directory
@@ -26,9 +23,6 @@ WORKDIR /var/www/html
 
 # Copy application files
 COPY . .
-
-# Copy custom Apache configuration
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
