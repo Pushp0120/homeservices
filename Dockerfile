@@ -1,7 +1,8 @@
-FROM php:8.1-apache
+FROM php:8.1-fpm
 
-# Install system dependencies
+# Install nginx and system dependencies
 RUN apt-get update && apt-get install -y \
+    nginx \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
@@ -15,8 +16,10 @@ RUN apt-get update && apt-get install -y \
     pdo_mysql \
     mysqli \
     gd \
-    zip \
-    && a2enmod rewrite
+    zip
+
+# Copy nginx configuration
+COPY default.conf /etc/nginx/sites-available/default
 
 # Set working directory
 WORKDIR /var/www/html
@@ -30,7 +33,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html/uploads
 
 # Expose port
-EXPOSE 80
+EXPOSE 8080
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Start nginx and php-fpm
+CMD service php8.1-fpm start && nginx -g 'daemon off;'
