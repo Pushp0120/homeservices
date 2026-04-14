@@ -35,5 +35,5 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port
 EXPOSE 8080
 
-# Start nginx and php-fpm
-CMD service php8.1-fpm start && nginx -g 'daemon off;'
+# Start php-fpm and nginx
+CMD php-fpm && nginx -g 'daemon off;'
