@@ -1,0 +1,22 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[[services]]
+name = "web"
+
+[services.web]
+source = "."
+healthcheckPath = "/"
+healthcheckTimeout = 100
+
+[[services.ports]]
+port = 8080
+
+[[services.env]]
+RAILWAY_ENVIRONMENT = "production"

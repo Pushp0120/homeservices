@@ -1,0 +1,12 @@
+.git
+.gitignore
+README.md
+SETUP_GUIDE.md
+*.sql
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+node_modules
+.env.local
+.env.production
