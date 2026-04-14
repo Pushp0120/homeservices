@@ -38,5 +38,9 @@ EXPOSE 8080
 # Configure php-fpm to listen on TCP port
 RUN sed -i 's/listen = \/run\/php\/php8.1-fpm.sock/listen = 9000/' /usr/local/etc/php-fpm.d/www.conf
 
-# Start php-fpm and nginx
-CMD php-fpm && nginx -g 'daemon off;'
+# Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Start services using startup script
+CMD ["/start.sh"]
