@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.php",
+      "use": "@vercel/php"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1.php"
+    }
+  ],
+  "env": {
+    "DB_HOST": "@planetscale_host",
+    "DB_USER": "@planetscale_user", 
+    "DB_PASSWORD": "@planetscale_password",
+    "DB_NAME": "@planetscale_database",
+    "DB_PORT": "3306"
+  }
+}
