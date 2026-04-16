@@ -10,6 +10,15 @@ function getDB() {
     static $pdo = null;
     if ($pdo === null) {
         try {
+            // Debug: Check environment variables
+            $debug_info = [
+                'DB_HOST' => DB_HOST,
+                'DB_USER' => DB_USER,
+                'DB_NAME' => DB_NAME,
+                'DB_PORT' => DB_PORT,
+                'DB_PASS_SET' => !empty(DB_PASS)
+            ];
+            
             $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4";
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -17,7 +26,10 @@ function getDB() {
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (PDOException $e) {
-            die(json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]));
+            die(json_encode([
+                'error' => 'Database connection failed: ' . $e->getMessage(),
+                'debug' => $debug_info ?? []
+            ]));
         }
     }
     return $pdo;
